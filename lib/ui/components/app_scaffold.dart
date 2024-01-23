@@ -38,17 +38,21 @@ class AppScaffold extends StatelessWidget {
             ),
       body: Padding(
         padding: EdgeInsets.only(
-            left: 15, right: 15, bottom: 5, top: title == null ? 10 : 35),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            child,
-            PrimaryButton(
-              buttonText: primaryButtonText ?? '',
-              onPressed: onPrimaryButtonPressed,
-            )
-          ],
-        ),
+            left: 15, right: 15, bottom: 10, top: title == null ? 50 : 10),
+        child: primaryButtonText == null
+            ? child
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  child,
+                  PrimaryButton(
+                    buttonText: primaryButtonText ?? '',
+                    onPressed: onPrimaryButtonPressed,
+                  )
+                ],
+              ),
       ),
     );
   }

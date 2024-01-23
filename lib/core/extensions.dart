@@ -17,6 +17,7 @@ extension IntExtensions on int {
     return Divider(
       color: Colors.black26,
       thickness: thickness,
+      indent: 2,
       height: toDouble(),
     );
   }
