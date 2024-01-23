@@ -14,4 +14,6 @@ class AppIcon {
   static Widget visaCardIcon = SvgPicture.asset('$baseAssets/visa.svg');
   static Widget cartIcon = SvgPicture.asset('$baseAssets/cart.svg');
   static Widget walletCreditCardIcon = SvgPicture.asset('$baseAssets/wallet-credit-card.svg');
+  static Widget radioOffIcon = SvgPicture.asset('$baseAssets/radio-off.svg');
+  static Widget radioOnIcon = SvgPicture.asset('$baseAssets/radio-on.svg');
 }
