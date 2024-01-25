@@ -32,6 +32,7 @@ class WalletProvider extends ChangeNotifier {
   void fundWallet(int amount, CardEntity cardEntity) {
     repository.fundWallet(amount, cardEntity);
     getTransactions();
+    getWallet();
   }
 
   void createWallet(String name, BuildContext context) {

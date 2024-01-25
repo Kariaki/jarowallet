@@ -10,28 +10,41 @@ import 'package:jarowallet/ui/modules/card/component/card_item_component.dart';
 import 'package:jarowallet/ui/modules/card/entity/card_entity.dart';
 import 'package:jarowallet/ui/modules/dialog/fund_amount_dialog.dart';
 import 'package:jarowallet/ui/state/provider/card_provider.dart';
+import 'package:jarowallet/ui/state/provider/wallet_provider.dart';
 
 import 'package:provider/provider.dart';
 
 class FundWalletScreen extends StatefulWidget {
-  const FundWalletScreen({super.key});
+  final String amount;
+
+  const FundWalletScreen({super.key, required this.amount});
 
   @override
   State<FundWalletScreen> createState() => _FundWalletScreenState();
 }
 
 class _FundWalletScreenState extends State<FundWalletScreen> {
-  int _selectedCard = -1;
+  int _selectedCardId = -1;
+
+  CardEntity? selectedCard;
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CardProvider>(context, listen: true);
+    final walletProvider = Provider.of<WalletProvider>(context, listen: false);
     return AppScaffold(
         title: 'Fund wallet',
         onBackPressed: () {},
         primaryButtonText: 'Fund',
+        primaryButtonEnabled: provider.cards.isNotEmpty,
         onPrimaryButtonPressed: () {
-          context.displayDialog(FundAmountDialog());
+          if (selectedCard == null) {
+            context.showSnackbar('Please select a payment card');
+            return;
+          }
+          walletProvider.fundWallet(int.parse(widget.amount), selectedCard!);
+          context.showSnackbar('Card funded with ₦ ${widget.amount}');
+          context.pop();
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,10 +65,11 @@ class _FundWalletScreenState extends State<FundWalletScreen> {
                 onDeleteClick: () {
                   provider.deleteCard(e);
                 },
-                selected: _selectedCard == e.id,
+                selected: _selectedCardId == e.id,
                 onPress: () {
                   setState(() {
-                    _selectedCard = e.id!;
+                    _selectedCardId = e.id!;
+                    selectedCard = e;
                   });
                 },
               );

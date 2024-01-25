@@ -5,7 +5,7 @@ import 'package:jarowallet/data/repository/interface/wallet_repository.dart';
 import 'package:jarowallet/ui/modules/card/entity/card_entity.dart';
 
 class WalletRepositoryImplementation extends WalletRepository {
-   List<TransactionModel> _transactions = [];
+  List<TransactionModel> _transactions = [];
   WalletModel? _currentWallet;
 
   @override

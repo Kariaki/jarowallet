@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 extension IntExtensions on int {
   Widget spaceWidth() {
@@ -7,6 +7,7 @@ extension IntExtensions on int {
       width: toDouble(),
     );
   }
+
   Widget spaceHeight() {
     return SizedBox(
       height: toDouble(),
@@ -43,6 +44,17 @@ extension DoubleExtensions on double {
     );
   }
 }
+
+extension StringExtension on String {
+  String toLocalString() {
+    NumberFormat numberFormat = NumberFormat.decimalPattern('en_US');
+
+    // Format the number using the NumberFormat instance
+    String formattedNumber = numberFormat.format(this);
+    return formattedNumber;
+  }
+}
+
 extension ContextExtensions on BuildContext {
   void push(Widget route) {
     Navigator.push(this, MaterialPageRoute(builder: (context) => route));
@@ -56,8 +68,9 @@ extension ContextExtensions on BuildContext {
     Navigator.pushAndRemoveUntil(
         this,
         MaterialPageRoute(builder: (context) => route),
-            (Route<dynamic> route) => false);
+        (Route<dynamic> route) => false);
   }
+
   //
   void showSnackbar(String message, {bool error = false}) {
     if (error) {
@@ -78,6 +91,7 @@ extension ContextExtensions on BuildContext {
     );
     ScaffoldMessenger.of(this).showSnackBar(snackBar);
   }
+
   //
   void showSnackbarSuccess(String message, {bool success = false}) {
     if (success) {
@@ -135,25 +149,25 @@ extension ContextExtensions on BuildContext {
       ),
     );
   }
-  //
-  // void pushReplace(Widget route) {
-  //   Navigator.pushReplacement(
-  //     this,
-  //     MaterialPageRoute(builder: (context) => route),
-  //   );
-  // }
-  //
-  // void displayDialogDismiss(Widget child) {
-  //   showDialog(
-  //     context: this,
-  //     barrierDismissible: true,
-  //     builder: (BuildContext context) {
-  //       return AppDialog(
-  //         child: child,
-  //       );
-  //     },
-  //   );
-  // }
+//
+// void pushReplace(Widget route) {
+//   Navigator.pushReplacement(
+//     this,
+//     MaterialPageRoute(builder: (context) => route),
+//   );
+// }
+//
+// void displayDialogDismiss(Widget child) {
+//   showDialog(
+//     context: this,
+//     barrierDismissible: true,
+//     builder: (BuildContext context) {
+//       return AppDialog(
+//         child: child,
+//       );
+//     },
+//   );
+// }
 }
 
 class AppDialog extends Dialog {
@@ -166,7 +180,6 @@ class AppDialog extends Dialog {
     return Dialog(
         alignment: Alignment.center,
         backgroundColor: backgroundColor,
-
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: child);
   }

@@ -4,6 +4,7 @@ import 'package:jarowallet/core/config/colors.dart';
 import 'package:jarowallet/core/extensions.dart';
 import 'package:jarowallet/ui/components/button.dart';
 import 'package:jarowallet/ui/components/text_input.dart';
+import 'package:jarowallet/ui/modules/wallet/fund_card.dart';
 
 class FundAmountDialog extends StatefulWidget {
   const FundAmountDialog({super.key});
@@ -13,6 +14,8 @@ class FundAmountDialog extends StatefulWidget {
 }
 
 class _FundAmountDialogState extends State<FundAmountDialog> {
+  final TextEditingController amountController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,13 +65,29 @@ class _FundAmountDialogState extends State<FundAmountDialog> {
           BasicTextInput(
             title: 'Amount',
             hint: '0.00',
+            controller: amountController,
             onChange: (value) {},
             inputType: TextInputType.number,
           ),
           20.spaceHeight(),
           PrimaryButton(
             buttonText: 'Continue',
-            onPressed: () {},
+            onPressed: () {
+              final amountText = amountController.text;
+              if (amountText.isEmpty) {
+                return;
+              }
+              try {
+                final number = double.parse(amountText);
+                if (number < 50) {
+                  context.showSnackbar(
+                      'Minimum of 50 naira is required to fund wallet');
+                  return;
+                }
+                context.pop();
+                context.push(FundWalletScreen(amount: amountText));
+              } catch (e) {}
+            },
           )
         ],
       ),
