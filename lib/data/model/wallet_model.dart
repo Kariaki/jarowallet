@@ -7,4 +7,9 @@ class WalletModel {
       {required this.walletId,
       required this.walletName,
       required this.balance});
+
+  WalletModel fund(double amount) {
+    return WalletModel(
+        walletId: walletId, walletName: walletName, balance: amount);
+  }
 }

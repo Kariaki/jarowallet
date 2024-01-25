@@ -22,6 +22,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
   TextEditingController expiryDateController = TextEditingController();
   TextEditingController cardPanController = TextEditingController();
   TextEditingController cardPinController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CardProvider>(context);
@@ -32,12 +33,13 @@ class _AddCardScreenState extends State<AddCardScreen> {
         onPrimaryButtonPressed: () {
           final random = Random(2).nextInt(1);
           final type = CardType.values[random];
-          final cardEntity = CardEntity(cardNumber: cardNumberController.text,
+          final cardEntity = CardEntity(
+              cardNumber: cardNumberController.text,
               expiryDate: expiryDateController.text,
               type: type,
               cardPin: cardPinController.text,
               cvv: cardPanController.text);
-          provider.addCard(cardEntity,context);
+          provider.addCard(cardEntity, context);
         },
         child: SingleChildScrollView(
           child: Column(
@@ -55,7 +57,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
               15.spaceHeight(),
               BasicTextInput(
                   controller: cardNameController,
-                  title: 'Name on card', hint: 'Enter', onChange: (value) {}),
+                  title: 'Name on card',
+                  hint: 'Enter',
+                  onChange: (value) {}),
               15.spaceHeight(),
               BasicTextInput(
                   title: 'Card number',
@@ -76,9 +80,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   inputType: TextInputType.number,
                   controller: cardPanController,
                   hint: 'Enter',
-                  isDate: true,
-                  onChange: (value) {
-                  }),
+                  onChange: (value) {}),
               15.spaceHeight(),
               BasicTextInput(
                   title: 'Card Pin',

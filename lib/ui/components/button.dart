@@ -31,6 +31,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
         minWidth: 150,
         height: 45,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,

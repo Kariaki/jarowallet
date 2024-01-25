@@ -5,13 +5,15 @@ import 'package:jarowallet/ui/modules/wallet/create_wallet.dart';
 import 'package:jarowallet/ui/modules/wallet/fund_card.dart';
 import 'package:jarowallet/ui/modules/wallet/wallet_screen.dart';
 import 'package:jarowallet/ui/state/provider/card_provider.dart';
+import 'package:jarowallet/ui/state/provider/wallet_provider.dart';
 
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (context) => CardProvider()..getCards())
+      ChangeNotifierProvider(create: (context) => CardProvider()..getCards()),
+      ChangeNotifierProvider(create: (context) => WalletProvider()..init()),
     ],
     child: const MyApp(),
   ));
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: backgroundColor,
         useMaterial3: true,
       ),
-      home: FundWalletScreen(),
+      home: CreateWalletScreen(),
     );
   }
 }

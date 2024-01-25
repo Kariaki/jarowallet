@@ -8,12 +8,14 @@ class AppScaffold extends StatelessWidget {
   final Widget child;
   final void Function()? onPrimaryButtonPressed;
   final void Function()? onBackPressed;
+  final bool primaryButtonEnabled;
 
   const AppScaffold(
       {super.key,
       this.title,
       this.onBackPressed,
       this.primaryButtonText,
+      this.primaryButtonEnabled = true,
       this.onPrimaryButtonPressed,
       required this.child});
 
@@ -27,7 +29,7 @@ class AppScaffold extends StatelessWidget {
               centerTitle: false,
               automaticallyImplyLeading: false,
               leading: BackButton(
-                onPressed: (){
+                onPressed: () {
                   context.pop();
                 },
                 color: Colors.black,
@@ -52,7 +54,8 @@ class AppScaffold extends StatelessWidget {
                   Expanded(child: child),
                   PrimaryButton(
                     buttonText: primaryButtonText ?? '',
-                    onPressed: onPrimaryButtonPressed,
+                    onPressed:
+                        primaryButtonEnabled ? onPrimaryButtonPressed : null,
                   )
                 ],
               ),

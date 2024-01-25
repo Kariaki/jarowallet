@@ -61,11 +61,12 @@ class BasicTextInput extends StatelessWidget {
                   TextInputFormatter.withFunction(
                     (oldValue, newValue) {
                       if (newValue.text.isNotEmpty) {
-                        return TextEditingValue(
-                          text: newValue.text.substring(0, 1).toUpperCase() +
-                              newValue.text.substring(1),
-                          selection: newValue.selection,
-                        );
+                        if(oldValue.text.length==1 && !oldValue.text.contains('/')){
+                          return TextEditingValue(
+                            text: '${newValue.text}/',
+                            selection: newValue.selection,
+                          );
+                        }
                       }
                       return newValue;
                     },
