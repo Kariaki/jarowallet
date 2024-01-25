@@ -84,7 +84,12 @@ class _FundWalletScreenState extends State<FundWalletScreen> {
   Widget addButton(CardProvider provider) {
     return InkWell(
       onTap: () {
-        context.push(AddCardScreen());
+        context.push(AddCardScreen(cardResult: (result) {
+          setState(() {
+            selectedCard = result;
+
+          });
+        }));
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,

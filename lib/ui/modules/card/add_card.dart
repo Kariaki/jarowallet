@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:jarowallet/core/extensions.dart';
 import 'package:jarowallet/data/enum/enums.dart';
 import 'package:jarowallet/ui/components/app_scaffold.dart';
@@ -10,7 +11,9 @@ import 'package:jarowallet/ui/state/provider/card_provider.dart';
 import 'package:provider/provider.dart';
 
 class AddCardScreen extends StatefulWidget {
-  const AddCardScreen({super.key});
+  final void Function(CardEntity) cardResult;
+
+  const AddCardScreen({super.key, required this.cardResult});
 
   @override
   State<AddCardScreen> createState() => _AddCardScreenState();
@@ -22,6 +25,8 @@ class _AddCardScreenState extends State<AddCardScreen> {
   TextEditingController expiryDateController = TextEditingController();
   TextEditingController cardPanController = TextEditingController();
   TextEditingController cardPinController = TextEditingController();
+
+  bool _value = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +41,14 @@ class _AddCardScreenState extends State<AddCardScreen> {
           final cardEntity = CardEntity(
               cardNumber: cardNumberController.text,
               expiryDate: expiryDateController.text,
+              id: DateTime.now().millisecondsSinceEpoch,
               type: type,
               cardPin: cardPinController.text,
               cvv: cardPanController.text);
+          if(!_value) {
+            widget.cardResult(cardEntity);
+            return;
+          }
           provider.addCard(cardEntity, context);
         },
         child: SingleChildScrollView(
@@ -88,6 +98,41 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   inputType: TextInputType.number,
                   hint: 'Enter',
                   onChange: (value) {}),
+              10.spaceHeight(),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _value = !_value;
+                  });
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Save Card',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color(0xFF1A2128),
+                        fontSize: 14,
+                        fontFamily: 'Work Sans',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    5.spaceWidth(),
+                    SizedBox(
+                      height: 25,
+                      child: Switch(
+                        value: _value,
+                        onChanged: (value) {
+                          setState(() {
+                            _value = value;
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ));
