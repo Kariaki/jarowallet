@@ -5,9 +5,13 @@ import 'package:jarowallet/core/extensions.dart';
 import 'package:jarowallet/ui/components/app_scaffold.dart';
 import 'package:jarowallet/ui/components/button.dart';
 import 'package:jarowallet/ui/components/text_input.dart';
+import 'package:jarowallet/ui/modules/card/add_card.dart';
 import 'package:jarowallet/ui/modules/card/component/card_item_component.dart';
 import 'package:jarowallet/ui/modules/card/entity/card_entity.dart';
 import 'package:jarowallet/ui/modules/dialog/fund_amount_dialog.dart';
+import 'package:jarowallet/ui/state/provider/card_provider.dart';
+
+import 'package:provider/provider.dart';
 
 class FundWalletScreen extends StatefulWidget {
   const FundWalletScreen({super.key});
@@ -21,6 +25,7 @@ class _FundWalletScreenState extends State<FundWalletScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<CardProvider>(context, listen: true);
     return AppScaffold(
         title: 'Fund wallet',
         onBackPressed: () {},
@@ -41,27 +46,32 @@ class _FundWalletScreenState extends State<FundWalletScreen> {
               ),
             ),
             15.spaceHeight(),
-            ...cards.map((e) {
+            ...provider.cards.map((e) {
               return CardItemComponent(
                 entity: e,
+                onDeleteClick: () {
+                  provider.deleteCard(e);
+                },
                 selected: _selectedCard == e.id,
                 onPress: () {
                   setState(() {
-                    _selectedCard = e.id;
+                    _selectedCard = e.id!;
                   });
                 },
               );
             }).toList(),
             1.divide(thickness: .3),
             15.spaceHeight(),
-            addButton()
+            addButton(provider)
           ],
         ));
   }
 
-  Widget addButton() {
+  Widget addButton(CardProvider provider) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        context.push(AddCardScreen());
+      },
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

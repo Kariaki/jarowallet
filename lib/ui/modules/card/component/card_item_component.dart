@@ -5,11 +5,13 @@ import 'package:jarowallet/core/extensions.dart';
 import 'package:jarowallet/ui/components/radio_button.dart';
 import 'package:jarowallet/ui/modules/card/entity/card_entity.dart';
 
+import '../../../../data/enum/enums.dart';
+
 class CardItemComponent extends StatelessWidget {
   final CardEntity entity;
   final bool selected;
   final void Function() onPress;
-  final void Function(CardEntity)? onDeleteClick;
+  final void Function()? onDeleteClick;
 
   const CardItemComponent(
       {super.key,
@@ -33,7 +35,7 @@ class CardItemComponent extends StatelessWidget {
             IconButton(
                 onPressed: () {
                   if (onDeleteClick != null) {
-                    onDeleteClick!(entity);
+                    onDeleteClick!();
                   }
                 },
                 icon: AppIcon.deleteIcon)

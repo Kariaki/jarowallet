@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jarowallet/core/extensions.dart';
 import 'package:jarowallet/ui/components/button.dart';
 
 class AppScaffold extends StatelessWidget {
@@ -26,7 +27,9 @@ class AppScaffold extends StatelessWidget {
               centerTitle: false,
               automaticallyImplyLeading: false,
               leading: BackButton(
-                onPressed: onBackPressed,
+                onPressed: (){
+                  context.pop();
+                },
                 color: Colors.black,
               ),
               titleTextStyle: const TextStyle(
@@ -46,7 +49,7 @@ class AppScaffold extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  child,
+                  Expanded(child: child),
                   PrimaryButton(
                     buttonText: primaryButtonText ?? '',
                     onPressed: onPrimaryButtonPressed,

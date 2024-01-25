@@ -44,60 +44,60 @@ extension DoubleExtensions on double {
   }
 }
 extension ContextExtensions on BuildContext {
-  // void push(Widget route) {
-  //   Navigator.push(this, MaterialPageRoute(builder: (context) => route));
-  // }
+  void push(Widget route) {
+    Navigator.push(this, MaterialPageRoute(builder: (context) => route));
+  }
+
+  void pop() {
+    Navigator.pop(this);
+  }
+
+  void pushRemoveUntil(Widget route) {
+    Navigator.pushAndRemoveUntil(
+        this,
+        MaterialPageRoute(builder: (context) => route),
+            (Route<dynamic> route) => false);
+  }
   //
-  // void pop() {
-  //   Navigator.pop(this);
-  // }
+  void showSnackbar(String message, {bool error = false}) {
+    if (error) {
+      final errorSnack = SnackBar(
+        content: Text(
+          message,
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
+        margin: EdgeInsets.only(top: 10),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      );
+      ScaffoldMessenger.of(this).showSnackBar(errorSnack);
+      return;
+    }
+    final snackBar = SnackBar(
+      content: Text(message),
+    );
+    ScaffoldMessenger.of(this).showSnackBar(snackBar);
+  }
   //
-  // void pushRemoveUntil(Widget route) {
-  //   Navigator.pushAndRemoveUntil(
-  //       this,
-  //       MaterialPageRoute(builder: (context) => route),
-  //           (Route<dynamic> route) => false);
-  // }
-  //
-  // void showSnackbar(String message, {bool error = false}) {
-  //   if (error) {
-  //     final errorSnack = SnackBar(
-  //       content: Text(
-  //         message,
-  //         style: const TextStyle(color: Colors.white),
-  //       ),
-  //       backgroundColor: Colors.red,
-  //       margin: EdgeInsets.only(top: 10),
-  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-  //     );
-  //     ScaffoldMessenger.of(this).showSnackBar(errorSnack);
-  //     return;
-  //   }
-  //   final snackBar = SnackBar(
-  //     content: Text(message),
-  //   );
-  //   ScaffoldMessenger.of(this).showSnackBar(snackBar);
-  // }
-  //
-  // void showSnackbarSuccess(String message, {bool success = false}) {
-  //   if (success) {
-  //     final successSnack = SnackBar(
-  //       content: Text(
-  //         message,
-  //         style: const TextStyle(color: Colors.white),
-  //       ),
-  //       backgroundColor: Colors.green,
-  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-  //     );
-  //     ScaffoldMessenger.of(this).showSnackBar(successSnack);
-  //     return;
-  //   }
-  //   final snackBar = SnackBar(
-  //     content: Text(message),
-  //   );
-  //   ScaffoldMessenger.of(this).showSnackBar(snackBar);
-  // }
-  //
+  void showSnackbarSuccess(String message, {bool success = false}) {
+    if (success) {
+      final successSnack = SnackBar(
+        content: Text(
+          message,
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.green,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      );
+      ScaffoldMessenger.of(this).showSnackBar(successSnack);
+      return;
+    }
+    final snackBar = SnackBar(
+      content: Text(message),
+    );
+    ScaffoldMessenger.of(this).showSnackBar(snackBar);
+  }
+
   // void showModalMax(Widget modal,
   //     {bool transparent = false, bool dismissible = true}) {
   //   final mediaQueryData = MediaQuery.of(this).size;

@@ -13,13 +13,17 @@ class BasicTextInput extends StatelessWidget {
   final bool isDate;
   final TextInputType inputType;
   final bool enabled;
+  final int maxLen;
+  final TextEditingController? controller;
 
   const BasicTextInput(
       {super.key,
       required this.title,
       required this.hint,
       this.inputType = TextInputType.text,
+        this.maxLen= 100,
       required this.onChange,
+        this.controller,
       this.enabled = true,
       this.isDate = false});
 
@@ -47,8 +51,9 @@ class BasicTextInput extends StatelessWidget {
           cursorColor: primary,
           enabled: enabled,
           keyboardType: inputType,
-          maxLength: isDate ? 5 : null,
+          controller: controller,
           selectionHeightStyle: BoxHeightStyle.tight,
+          maxLengthEnforcement: MaxLengthEnforcement.enforced,
           inputFormatters: !isDate
               ? []
               : [
@@ -68,7 +73,7 @@ class BasicTextInput extends StatelessWidget {
                 ],
           decoration: InputDecoration(
             hintText: hint,
-            constraints: const BoxConstraints(maxHeight: 46),
+            constraints: const BoxConstraints(maxHeight: 46, minHeight: 46),
             hintStyle: const TextStyle(
               color: Color(0xFF667398),
               fontSize: 14,
